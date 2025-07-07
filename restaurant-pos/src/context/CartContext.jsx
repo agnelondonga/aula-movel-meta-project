@@ -1,13 +1,14 @@
+// CartContext.jsx
 import { useState } from 'react';
 import { CartContext } from './CartContextDef';
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState({}); // { tableId: [{ item, quantity }], 'none': [...] }
-  const [orders, setOrders] = useState([]); // [{ tableId, items, status, total }]
+  const [cart, setCart] = useState({});
+  const [orders, setOrders] = useState([]);
   const [tables, setTables] = useState([
-    { id: 1, status: 'Available' },
-    { id: 2, status: 'Available' },
-    { id: 3, status: 'Available' },
+    { id: 1, tableNumber: 1, status: 'Available' },
+    { id: 2, tableNumber: 2, status: 'Available' },
+    { id: 3, tableNumber: 3, status: 'Available' },
   ]);
 
   const addToCart = (item, tableId) => {
@@ -41,10 +42,45 @@ export const CartProvider = ({ children }) => {
 
   const removeFromCart = (itemId, tableId) => {
     const key = tableId ?? 'none';
-    setCart((prev) => ({
-      ...prev,
-      [key]: prev[key].filter((item) => item.id !== itemId),
-    }));
+    setCart((prev) => {
+      const updatedCart = prev[key].filter((item) => item.id !== itemId);
+      return {
+        ...prev,
+        [key]: updatedCart,
+      };
+    });
+    if (tableId) {
+      setTables((prev) =>
+        prev.map((table) =>
+          table.id === tableId && cart[tableId]?.length === 1
+            ? { ...table, status: 'Available' }
+            : table
+        )
+      );
+    }
+  };
+
+  const updateQuantity = (itemId, tableId, quantity) => {
+    const key = tableId ?? 'none';
+    setCart((prev) => {
+      const tableCart = prev[key] || [];
+      const updatedCart = tableCart.map((item) =>
+        item.id === itemId ? { ...item, quantity } : item
+      );
+      if (tableId) {
+        setTables((prevTables) =>
+          prevTables.map((table) =>
+            table.id === tableId && updatedCart.length > 0
+              ? { ...table, status: 'In Service' }
+              : table
+          )
+        );
+      }
+      return {
+        ...prev,
+        [key]: updatedCart,
+      };
+    });
   };
 
   const getTotal = (tableId) => {
@@ -110,6 +146,7 @@ export const CartProvider = ({ children }) => {
         tables,
         addToCart,
         removeFromCart,
+        updateQuantity,
         getTotal,
         submitOrder,
         updateOrderStatus,

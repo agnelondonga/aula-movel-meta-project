@@ -1,29 +1,30 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { FaTachometerAlt, FaShoppingCart, FaUtensils, FaCreditCard, FaFileAlt, FaCashRegister, FaCog, FaQuestionCircle, FaList, FaSignInAlt } from 'react-icons/fa';
+import { FaTachometerAlt, FaShoppingCart, FaUtensils, FaFileAlt, FaCog, FaQuestionCircle, FaList } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 const SidebarContainer = styled(motion.div)`
-  width: 160px;
+  width: 180px; /* Increased from 160px to accommodate larger text/icons */
   height: 100vh;
   background: linear-gradient(180deg, #1A3C34 0%, #14332C 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 0;
+  padding: 12px 0; /* Increased padding from 8px */
   position: fixed;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 `;
 
 const Logo = styled.div`
   font-family: 'Poppins', sans-serif;
-  font-size: 14px;
+  font-size: 18px; /* Increased from 14px */
   font-weight: 700;
   color: #28A745;
   background: #FFFFFF;
-  padding: 8px 12px;
-  border-radius: 5px;
-  margin-bottom: 12px;
+  padding: 10px 14px; /* Increased from 8px 12px */
+  border-radius: 6px; /* Slightly increased from 5px */
+  margin-bottom: 16px; /* Increased from 12px */
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease;
@@ -37,16 +38,16 @@ const Logo = styled.div`
 const NavItem = styled(NavLink)`
   color: #F8F9FA;
   font-family: 'Roboto', sans-serif;
-  font-size: 12px;
+  font-size: 16px; /* Increased from 12px */
   text-align: center;
-  margin: 4px 0;
-  padding: 6px;
-  width: 120px; /* Increased from 100px */
+  margin: 6px 0; /* Increased from 4px */
+  padding: 8px; /* Increased from 6px */
+  width: 140px; /* Increased from 120px */
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
-  border-radius: 8px;
+  gap: 10px; /* Increased from 8px */
+  border-radius: 10px; /* Increased from 8px */
   transition: all 0.3s ease;
   position: relative;
 
@@ -71,12 +72,12 @@ const Icon = styled.div`
 
 const Tooltip = styled.span`
   position: absolute;
-  left: 150px; /* Adjusted from 130px */
+  left: 170px; /* Increased from 150px to account for wider sidebar */
   background: #1A3C34;
   color: #F8F9FA;
-  padding: 5px 8px;
-  border-radius: 5px;
-  font-size: 12px;
+  padding: 6px 10px; /* Increased from 5px 8px */
+  border-radius: 6px; /* Increased from 5px */
+  font-size: 14px; /* Increased from 12px */
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
@@ -91,62 +92,47 @@ const Tooltip = styled.span`
 function Sidebar() {
   return (
     <SidebarContainer
-      initial={{ x: -140 }} 
+      initial={{ x: -180 }} /* Adjusted for new width */
       animate={{ x: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
     >
- <NavLink to="/sales">
+      <NavLink to="/sales">
         <Logo>Eva e Filhos</Logo>
       </NavLink>
       <NavItem to="/dashboard">
-        <Icon><FaTachometerAlt size={18} /></Icon>
+        <Icon><FaTachometerAlt size={24} /></Icon> {/* Increased from 18 */}
         Dashboard
         <Tooltip>Dashboard</Tooltip>
       </NavItem>
       <NavItem to="/sales">
-        <Icon><FaUtensils size={18} /></Icon>
+        <Icon><FaUtensils size={24} /></Icon>
         Vendas
         <Tooltip>Vendas</Tooltip>
       </NavItem>
       <NavItem to="/orders">
-        <Icon><FaList size={18} /></Icon>
+        <Icon><FaList size={24} /></Icon>
         Pedidos
         <Tooltip>Pedidos</Tooltip>
       </NavItem>
-      <NavItem to="/payment">
-        <Icon><FaCreditCard size={18} /></Icon>
-        Pagamentos
-        <Tooltip>Pagamentos</Tooltip>
-      </NavItem>
       <NavItem to="/products">
-        <Icon><FaShoppingCart size={18} /></Icon>
+        <Icon><FaShoppingCart size={24} /></Icon>
         Produtos
         <Tooltip>Produtos</Tooltip>
       </NavItem>
       <NavItem to="/reports">
-        <Icon><FaFileAlt size={18} /></Icon>
+        <Icon><FaFileAlt size={24} /></Icon>
         Relatórios
         <Tooltip>Relatórios</Tooltip>
       </NavItem>
-      <NavItem to="/cash-closure">
-        <Icon><FaCashRegister size={18} /></Icon>
-        Fecho de Caixa
-        <Tooltip>Fecho de Caixa</Tooltip>
-      </NavItem>
       <NavItem to="/settings">
-        <Icon><FaCog size={18} /></Icon>
+        <Icon><FaCog size={24} /></Icon>
         Configurações
         <Tooltip>Configurações</Tooltip>
       </NavItem>
       <NavItem to="/support">
-        <Icon><FaQuestionCircle size={18} /></Icon>
+        <Icon><FaQuestionCircle size={24} /></Icon>
         Suporte
         <Tooltip>Suporte</Tooltip>
-      </NavItem>
-      <NavItem to="/login">
-        <Icon><FaSignInAlt size={18} /></Icon>
-        Login
-        <Tooltip>Entrar</Tooltip>
       </NavItem>
     </SidebarContainer>
   );
